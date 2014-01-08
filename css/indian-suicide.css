@@ -47,3 +47,9 @@ svg {
 .cause:hover {
 	cursor: hand;
 }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #fff;
+}
