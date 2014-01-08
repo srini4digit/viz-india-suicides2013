@@ -1,0 +1,49 @@
+@media (min-width: 1200px) {
+  .container {
+    width: 1400px;
+  }
+}
+
+#divSvg {
+	border : solid thin grey;
+	height: 600px;
+	padding: 10px;
+	text-align: right;
+}
+
+#spnInfo {
+	display: inline;
+	padding: 10px;
+	width: 300px;
+	min-width: 500px;
+}
+
+#divSvgControl {
+	border : solid thin green;
+	height: 600px;
+	padding: 10px;
+	text-align: left;
+}
+
+.jumbotron {
+	height: 200px;
+}
+
+.svgHolder {
+	border : solid thin yellow;
+	width: 1030px;
+	height: 550px;
+	/* margin-left: 50px; */
+}
+
+svg {
+  width: 1030px;
+  height: 550px;
+  border: solid 1px #ccc;
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.cause:hover {
+	cursor: hand;
+}
