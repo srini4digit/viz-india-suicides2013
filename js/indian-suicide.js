@@ -7,17 +7,36 @@ var prev = "ANDHRA PRADESH";
 var w = 1030,
     h = 550,
     p = [10, 50, 50, 20],
-    x = d3.scale.ordinal().rangeRoundBands([0, w - p[1] - p[3]]),
-    y = d3.scale.linear().range([0, h - p[0] - p[2]]),
+    h_usable = h - p[0] - p[2],
+    w_usable = w - p[1] - p[3],
+    x = d3.scale.ordinal().rangeRoundBands([0, w_usable]),
+    y = d3.scale.linear().range([h_usable,0]),
     z = d3.scale.category20();
+
+var xAxis = d3.svg.axis().scale(x).orient("bottom");
+
+var yAxis = d3.svg.axis().scale(y).ticks(5).orient("right");
+
+// var zoom = d3.behavior.zoom()
+//     .x(x)
+//     .y(y)
+//     .scaleExtent([1, 10])
+//     .on("zoom", zoomed);
+
+// function zoomed() {
+//   svg.select(".x.axis").call(xAxis);
+//   svg.select(".y.axis").call(yAxis);
+// }
     
 var svg = d3.select("div.svgHolder").append("svg:svg")
     .attr("width", w)
     .attr("height", h)
   .append("svg:g")
-    .attr("transform", "translate(" + p[3] + "," + (h - p[2]) + ")");
+    //.attr("transform", "translate(" + p[3] + "," + (h - p[2]) + ")");
+    .attr("transform", "translate(" + p[3] + ",0)");
+    // .call(zoom);
 
-d3.csv("data/indian-suicide.csv", function(deaths) {
+d3.csv("data/data.csv", function(deaths) {
 
 deaths.forEach(function(death){
    if(!prev.match("TOTAL") && death.year == "2012")
@@ -40,7 +59,7 @@ deaths.forEach(function(death){
 
 });
 
-//pivotData.push({"name": prev , "data" : tmpData});
+pivotData.push({"name": prev , "data" : tmpData});
 
 var causes = d3.layout.stack()(causesArray.map(function(cause) {
     return pivotData.map(function(d,i) {
@@ -50,10 +69,12 @@ var causes = d3.layout.stack()(causesArray.map(function(cause) {
         return {x: d.name, y: 0, causename : cause};
     });
   }));
-    
+  
+  console.log(causes);
+
   // Compute the x-domain (by State) and y-domain (by top).
   x.domain(causes[0].map(function(d) { return d.x; }));
-  y.domain([0, d3.max(causes[causes.length - 1], function(d) { return d.y0 + d.y; })]);
+  y.domain([0, d3.max(causes[causes.length - 1], function(d) { return d.y+d.y0; })]);
 
 // Add a group for each cause.
   var cause = svg.selectAll("g.cause")
@@ -89,14 +110,13 @@ svg.call(tip);
       .data(Object)
     .enter().append("svg:rect")
       .attr("x", function(d) { return x(d.x); })
-      .attr("y", function(d) { return -y(d.y0) - y(d.y); })
-      .attr("height", function(d) { return y(d.y); })
+      .attr("y", function(d) { return 0;/* return h_usable - y(d.y0); */ })
+      .attr("height", function(d) { return h_usable - y(d.y); })
       .attr("width", x.rangeBand())
-      /*.on("mouseover",function(d){
-        $("#spnInfo").html(d.x + "\t "+d.causename+" : "+d.y);
-      }) */
       .on("mouseover",tip.show)
-      .on('mouseout', tip.hide);
+      .on('mouseout', tip.hide)
+      .attr("transform",function(d){return "translate(0,"+eval(y(d.y0) - h_usable + y(d.y))+")"; });
+
 
   // Add a label per state.
   var label = svg.selectAll("text.names")
@@ -108,7 +128,7 @@ svg.call(tip);
       .attr("dy", ".71em")
       .text(function(d){return d;})
       .attr("transform", function(d) { var tr = eval(x(d) + x.rangeBand() / 2) ; return "translate("+tr+","+tr+")rotate(270)"; });
-
+/*
   // Add a label per state.
   var label2 = svg.selectAll("text.totals")
       .data(pivotData)
@@ -119,22 +139,35 @@ svg.call(tip);
       .attr("text-anchor", "middle")
       .text(function(d){return d.data["Total"]["G_T"];
       });
-
+*/
 // Add y-axis rules.
-  var rule = svg.selectAll("g.rule")
+/*  var rule = svg.selectAll("g.rule")
       .data(y.ticks(5))
     .enter().append("svg:g")
       .attr("class", "rule")
       .attr("transform", function(d) { return "translate(0," + -y(d) + ")"; });
 
-  /* rule.append("svg:line")
+ rule.append("svg:line")
       .attr("x2", w - p[1] - p[3])
       .style("stroke", function(d) { return d ? "#fff" : "#000"; })
       .style("stroke-opacity", function(d) { return d ? .7 : null; });
-  */
+
   rule.append("svg:text")
       .attr("x", w - p[1] - p[3] + 6)
       .attr("dy", ".35em")
       .text(d3.format(",d"));
+  
+*/
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0,490)")
+    .call(xAxis);
+
+svg.append("g")
+    .attr("class", "y axis")
+    //.attr("transform","translate("+eval(w - p[1] - p[3])+",-"+eval(h - p[0] - p[2])+")")
+    .call(yAxis);      
+
+
 
 });
