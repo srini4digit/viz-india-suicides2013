@@ -1,26 +1,31 @@
+@font-face {
+      font-family: sertigregular;
+      src: url("css/Sertig.otf") format("opentype");
+      }
+
 @media (min-width: 1200px) {
   .container {
-    width: 1400px;
+    width: 1500px;
   }
 }
 
 #divSvg {
 	border : solid thin grey;
-	height: 600px;
+	height: 800px;
 	padding: 10px;
-	text-align: right;
 }
 
 #spnInfo {
-	display: inline;
+	/* display: inline; */
 	padding: 10px;
 	width: 300px;
 	min-width: 500px;
+	margin-bottom: 5px;
 }
 
 #divSvgControl {
 	border : solid thin green;
-	height: 600px;
+	height: 800px;
 	padding: 10px;
 	text-align: left;
 }
@@ -29,27 +34,33 @@
 	height: 200px;
 }
 
+.jumbotron h1 {
+	font-family: sertiregular;
+}
 .svgHolder {
-	border : solid thin yellow;
 	width: 1030px;
-	height: 550px;
+	height: 800px;
 	/* margin-left: 50px; */
 }
 
 svg {
   width: 1030px;
-  height: 550px;
-  border: solid 1px #ccc;
+  height: 800px;
+  /* border: solid 1px #ccc; */
   font: 10px sans-serif;
   shape-rendering: crispEdges;
 }
 
 .cause:hover {
-	cursor: hand;
+	cursor: pointer;
 }
 
 .axis path,
 .axis line {
   fill: none;
   stroke: #fff;
+}
+
+#tblLegend tr td:hover{
+	cursor: pointer;
 }
