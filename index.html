@@ -19,7 +19,7 @@
     <!-- Custom styles for this template -->
     <link href="css/indian-suicide.css" rel="stylesheet">
     <link href="css/d3.tip.css" rel="stylesheet">
-
+    
   </head>
 
   <body>
@@ -27,7 +27,7 @@
     <div class="container theme-showcase">
 
       <div class="jumbotron">
-        <h1>Hello, world!</h1>
+        <h1>Visualizations</h1>
         <p>Place holder for title and stuff</p>
         
       </div>
@@ -35,19 +35,26 @@
       <div class="row">
         <div id='divSvg' class="col-sm-9">
           <div id='spnInfo' class="alert alert-info">Info about the Causes</div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default">Abs</button>
-            <button type="button" class="btn btn-default">%</button>
-          </div>
           <div class='svgHolder'>
 
           </div>
         </div><!-- /.divSvg -->
         <div id = 'divSvgControl'class="col-sm-3">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default">M</button>
-            <button type="button" class="btn btn-default">F</button>
-            <button type="button" class="btn btn-default">All</button>
+          <div class="btn-group" data-toggle="buttons">
+            <label class="lblRdo btn btn-primary">
+              <input type="radio" name="rdoGender" id="male" value="M_T"> M
+            </label>
+            <label class="lblRdo btn btn-primary">
+              <input type="radio" name="rdoGender" id="female" value="F_T"> F
+            </label>
+            <label class="lblRdo btn btn-primary active">
+              <input type="radio" name="rdoGender" id="all" value="G_T" checked> All
+            </label>
+          </div>
+          <div>
+            <table id="tblLegend">
+
+            </table>
           </div>
         </div><!-- /.col-sm-3 -->
  
@@ -62,7 +69,8 @@
     <script src="js/jquery-2.0.3.js"></script>
     <script src="js/d3.v3.js"></script>
     <script src="js/d3.tip.js"></script>
-    <script src="js/indian-suicide.js"></script>
+    <script src="js/d3.stackedBar.js"></script>
+    <script src="js/script.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
