@@ -13,7 +13,7 @@ var w = 1030,
     w_usable = w - p[1] - p[3],
     x = d3.scale.ordinal().rangeRoundBands([0, w_usable]),
     y = d3.scale.linear().range([h_usable,0]),
-    z = d3.scale.category20();
+    z = d3.scale.category20().domain(causesArray);
 
 var xAxis = d3.svg.axis().scale(x).orient("bottom");
 
@@ -25,48 +25,49 @@ var svg = d3.select("div.svgHolder").append("svg:svg")
     .append("svg:g")
     .attr("transform", "translate(" + p[3] + ","+p[0]+")");
     
-d3.csv("data/data.csv", function(deaths) {
+d3.csv("data/indian-suicide.csv", function(deaths) {
 
 deaths.forEach(function(death){
-  if(death.year == "2012") {
+  
     
    if(death.cause == "Total" && statsTotal[death.state]) statsTotal[death.state][death.year] = death.G_T;
-
+   
    if(!prev.match("TOTAL"))
     if (prev == death.state){ 
-        tmpData[death.cause] = [];
-        tmpData[death.cause]["M_T"] = death.M_T;
-        tmpData[death.cause]["F_T"] = death.F_T;
-        tmpData[death.cause]["G_T"] = death.G_T;
+      
+        if(!tmpData[death.year]) tmpData[death.year] = [];
+        tmpData[death.year][death.cause] = [];
+        tmpData[death.year][death.cause]["M_T"] = death.M_T;
+        tmpData[death.year][death.cause]["F_T"] = death.F_T;
+        tmpData[death.year][death.cause]["G_T"] = death.G_T;
     }
     else {
-        
         pivotData.push({"name": prev , "stateCode" : statesArray[prev], "data" : tmpData});
         prev = death.state;
         tmpData = [];
-        tmpData[death.cause] = [];
-        tmpData[death.cause]["M_T"] = death.M_T;
-        tmpData[death.cause]["F_T"] = death.F_T;
-        tmpData[death.cause]["G_T"] = death.G_T;
+        tmpData[death.year] = [];
+        tmpData[death.year][death.cause] = [];
+        tmpData[death.year][death.cause]["M_T"] = death.M_T;
+        tmpData[death.year][death.cause]["F_T"] = death.F_T;
+        tmpData[death.year][death.cause]["G_T"] = death.G_T;
     }
-  }  
-
+  
 });
 
 pivotData.push({"name": prev ,"stateCode" : "GA", "data" : tmpData});
 
-updateStackedBarChart("G_T");
+updateStackedBarChart("G_T","2011");
 drawLegend();
 
 });
 
 
-function updateStackedBarChart(arg1){
-
+function updateStackedBarChart(arg1,arg2){
+// arg1 = M/F/ALL arg2=year
   causes = d3.layout.stack()(causesArray.map(function(cause) {
     return pivotData.map(function(d,i) {
-      if(d.data[cause])
-        return {x: statesArray[d.name], y: +(d.data[cause][arg1]), causename : cause};
+      if(d.data[arg2] && d.data[arg2][cause])
+        return {x: statesArray[d.name], y: +(d.data[arg2][cause][arg1]), causename : cause};
       else
         return {x: statesArray[d.name], y: 0, causename : cause};
     });
@@ -82,22 +83,8 @@ function updateStackedBarChart(arg1){
 
   cause.enter().append("svg:g")
       .attr("class", "cause")
-      .style("fill", function(d, i) { return z(i); })
-      .style("stroke", function(d, i) { return d3.rgb(z(i)).darker(); })
-      .on("mouseover",function(d,i){
-        /*
-        // Reduce opacity of other causes 
-        d3.selectAll("g.cause").attr("fill-opacity",0.2);
-        // Highlight the hovered one
-        d3.select(this).attr("fill-opacity",1);
-        d3.select(this).attr("cursor","hand");
-        */
-      })
-      .on("mouseout",function(d,i){
-        // Opacity normal for all
-        //d3.selectAll("g.cause").attr("fill-opacity",1);
-      });
-  
+      .style("fill", function(d, i) { return z(d[0].causename); })
+      .style("stroke", function(d, i) { return d3.rgb(z(d[0].causename)).darker(); });
   cause.exit().remove();
       
 
@@ -137,10 +124,15 @@ barLabels = svg.selectAll("text.totals")
 
 barLabels.enter().append("svg:text")
         .attr("x",  function(d) { return x(d.stateCode) + x.rangeBand() / 2; })
-        .attr("y", function(d){  return y(d.data["Total"][arg1]);})
+        .attr("y", function(d){  if(d.data[arg2]) return y(d.data[arg2]["Total"][arg1]);
+                                 else return y(0);
+                              })
         .attr("text-anchor", "middle")
         .attr("class","totals")
-        .text(function(d){return d.data["Total"][arg1];});
+        .text(function(d){ if(d.data[arg2]) return d.data[arg2]["Total"][arg1];
+                                 else return 0;
+                         });
+
 barLabels.exit().remove();
 
 svg.selectAll("g.x.axis").remove();
@@ -164,11 +156,10 @@ function drawLegend(){
       .append("tr")
       .append("td")
       .text(function(d,i){ return d;})
-      .style("border-left",function(d,i){ return "solid 5px "+z(i);})
+      .style("border-left",function(d,i){ return "solid 5px "+z(d);})
       .style("padding-left", "5px")
       .style("height", "25px")
       .on("mouseover",function(d,i){
-        
         // Reduce opacity of other causes 
         var tmp = d3.selectAll("g.cause").attr("fill-opacity",0.2);
         // Highlight the hovered one
@@ -180,6 +171,9 @@ function drawLegend(){
       .on("mouseout",function(d,i){
         d3.selectAll("g.cause").attr("fill-opacity",1);
         d3.selectAll("#tblLegend tr td").style("opacity",1);
+      })
+      .on("click",function(d,i){
+
       });
   
 }
