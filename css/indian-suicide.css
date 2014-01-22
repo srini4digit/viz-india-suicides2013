@@ -39,13 +39,13 @@
 }
 .svgHolder {
 	width: 1030px;
-	height: 800px;
+	height: 750px;
 	/* margin-left: 50px; */
 }
 
 svg {
   width: 1030px;
-  height: 800px;
+  height: 750px;
   /* border: solid 1px #ccc; */
   font: 10px sans-serif;
   shape-rendering: crispEdges;
@@ -63,4 +63,23 @@ svg {
 
 #tblLegend tr td:hover{
 	cursor: pointer;
+}
+
+#divYearSelection {
+	margin-bottom: 25px;
+}
+
+a.yearSelection {
+	border : thin solid orange;
+	padding: 5px 15px;
+	text-decoration: none;
+	font-weight: bolder;
+	font-style: 14px;
+	color : orange;
+	margin: 0px;
+}
+
+a.yearSelection:hover, a.yearSelection.active {
+	color: white;
+	background-color : orange; 
 }
