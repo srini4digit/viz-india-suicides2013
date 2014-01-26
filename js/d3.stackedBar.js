@@ -13,7 +13,7 @@ var w = 1030,
     w_usable = w - p[1] - p[3],
     x = d3.scale.ordinal().rangeRoundBands([0, w_usable]),
     y = d3.scale.linear().range([h_usable,0]),
-    z = d3.scale.category20().domain(causesArray);
+    z = d3.scale.category20c().domain(causesArray);
 
 var xAxis = d3.svg.axis().scale(x).orient("bottom");
 
@@ -56,23 +56,45 @@ deaths.forEach(function(death){
 
 pivotData.push({"name": prev ,"stateCode" : "GA", "data" : tmpData});
 
-updateStackedBarChart("G_T","2011");
+updateStackedBarChart("G_T","2012");
 drawLegend();
 
 });
 
 
-function updateStackedBarChart(arg1,arg2){
+function updateStackedBarChart(){
 // arg1 = M/F/ALL arg2=year
+var args = getArguments();
+arg1 = args.gender;
+arg2 = args.year;
+arg3 = args.cause;
+
+console.log(arg1 + ","+arg2+","+arg3);
+
+ if(!arg3) {
   causes = d3.layout.stack()(causesArray.map(function(cause) {
     return pivotData.map(function(d,i) {
       if(d.data[arg2] && d.data[arg2][cause])
         return {x: statesArray[d.name], y: +(d.data[arg2][cause][arg1]), causename : cause};
       else
         return {x: statesArray[d.name], y: 0, causename : cause};
+    
     });
   }));
-
+ }
+ else
+ { var filterCause = [arg3];
+  
+  causes = d3.layout.stack()(filterCause.map(function(cause) {
+    return pivotData.map(function(d,i) {
+      if(d.data[arg2] && d.data[arg2][cause])
+        return {x: statesArray[d.name], y: +(d.data[arg2][cause][arg1]), causename : cause};
+      else
+        return {x: statesArray[d.name], y: 0, causename : cause};
+    
+    });
+  }));
+  }
   // Compute the x-domain (by State) and y-domain (by top).
   x.domain(causes[0].map(function(d) { return d.x; }));
   y.domain([0, d3.max(causes[causes.length - 1], function(d) { return d.y+d.y0; })]);
@@ -92,12 +114,13 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong>"+d.x+":</strong> <span style='color:red'>" + d.causename+" : "+d.y + "</span>";
+    return "<strong>"+d.x+":</strong> <span style='color:aqua'>" + d.causename+" : "+d.y + "</span>";
   });
 tip.direction('n');
 svg.call(tip);
 
 // Add a rect for each state and each cause.
+cause.selectAll("rect").remove(); // Fixes the bug of stuck rectangles
 rect = cause.selectAll("rect")
       .data(Object,function(d){return d.x;});
 
@@ -110,11 +133,10 @@ rect.enter().append("svg:rect")
       .on('mouseout', tip.hide)
       .attr("transform",function(d){return "translate(0,"+eval(y(d.y0) - h_usable + y(d.y))+")"; })
       .transition()
+      .delay(function(d, i) { return i * 10; })
       .duration(2000)
-      .delay(function(d,i){ return i * 10;})
+      .ease("elastic")
       .attr("height", function(d) { return h_usable - y(d.y); });
-
-rect.exit().remove();
 
 // Remove all old labels
 svg.selectAll("text.totals").remove();
@@ -124,12 +146,14 @@ barLabels = svg.selectAll("text.totals")
 
 barLabels.enter().append("svg:text")
         .attr("x",  function(d) { return x(d.stateCode) + x.rangeBand() / 2; })
-        .attr("y", function(d){  if(d.data[arg2]) return y(d.data[arg2]["Total"][arg1]);
+        .attr("y", function(d){ var cause = (arg3) ? arg3 : "Total"; 
+                                if(d.data[arg2]) return y(d.data[arg2][cause][arg1]) - 5;
                                  else return y(0);
                               })
         .attr("text-anchor", "middle")
         .attr("class","totals")
-        .text(function(d){ if(d.data[arg2]) return d.data[arg2]["Total"][arg1];
+        .text(function(d){ var cause = (arg3) ? arg3 : "Total";
+                                if(d.data[arg2]) return d.data[arg2][cause][arg1];
                                  else return 0;
                          });
 
@@ -160,20 +184,41 @@ function drawLegend(){
       .style("padding-left", "5px")
       .style("height", "25px")
       .on("mouseover",function(d,i){
-        // Reduce opacity of other causes 
-        var tmp = d3.selectAll("g.cause").attr("fill-opacity",0.2);
-        // Highlight the hovered one
-        d3.select(tmp[0][i]).attr("fill-opacity",1);
-        d3.selectAll("#tblLegend tr td").style("opacity",0.2);
-        d3.select(this).style("opacity",1);
+        if($("#tblLegend tr td.active").length == 0 ) {
+          // Reduce opacity of other causes 
+          var tmp = d3.selectAll("g.cause").attr("fill-opacity",0.2);
+          // Highlight the hovered one
+          d3.select(tmp[0][i]).attr("fill-opacity",1);
+          d3.selectAll("#tblLegend tr td").style("opacity",0.2);
+          d3.select(this).style("opacity",1);
+        }
         
       })
       .on("mouseout",function(d,i){
-        d3.selectAll("g.cause").attr("fill-opacity",1);
-        d3.selectAll("#tblLegend tr td").style("opacity",1);
-      })
-      .on("click",function(d,i){
+        if($("#tblLegend tr td.active").length == 0 ) {
+          d3.selectAll("g.cause").attr("fill-opacity",1);
+          d3.selectAll("#tblLegend tr td").style("opacity",1);  
+        }
 
-      });
+        
+      })
+      .on("click", function(d,i){
+        // Reduce opacity of all others
+        d3.selectAll("#tblLegend tr td").style("opacity",0.2);
+        d3.select(this).style("opacity",1);
+
+        if($("#tblLegend tr td.active").length == 0 )
+        {
+          $(this).addClass("active");
+          updateStackedBarChart();
+        }
+        else {
+          $("#tblLegend tr td.active").each(function(){ $(this).removeClass("active")});
+          $(this).addClass("active");
+          updateStackedBarChart();
+          }
+
+      })
+      ;
   
 }
