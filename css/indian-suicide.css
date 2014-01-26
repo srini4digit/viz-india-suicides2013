@@ -61,25 +61,36 @@ svg {
   stroke: #fff;
 }
 
+#spnInfo span {
+	margin: 5px;
+	padding: 5px;
+}
+
 #tblLegend tr td:hover{
 	cursor: pointer;
 }
 
-#divYearSelection {
-	margin-bottom: 25px;
+#tblLegend tr td.active {
+	font-weight: bolder;
+	border : thin solid teal;
 }
 
-a.yearSelection {
-	border : thin solid orange;
-	padding: 5px 15px;
+.btn-group {
+	margin-bottom: 20px;
+}
+
+a.controls {
+	border : thin solid teal;
+	border-radius: 3px;
+	padding: 5px 15px ;
 	text-decoration: none;
 	font-weight: bolder;
 	font-style: 14px;
-	color : orange;
+	color : teal;
 	margin: 0px;
 }
 
-a.yearSelection:hover, a.yearSelection.active {
+a.controls:hover, a.controls.active {
 	color: white;
-	background-color : orange; 
+	background-color : teal; 
 }
