@@ -1,6 +1,7 @@
 var causesArray = ["Bankruptcy or Sudden change in Economic","Suspected/Illicit Relation","Cancellation/Non-Settlement of Marriage","Not having Children(Barrenness/Impotency","Illness (Aids/STD)","Cancer","Paralysis","Insanity/Mental Illness","Other Prolonged Illness","Death of Dear Person","Dowry Dispute","Divorce","Drug Abuse/Addiction","Failure in Examination","Fall in Social Reputation","Family Problems","Ideological Causes/Hero Worshipping","Illegitimate Pregnancy","Love Affairs","Physical Abuse (Rape/Incest Etc.)","Poverty","Professional/Career Problem","Property Dispute","Unemployment","Causes Not known","Other Causes (Please Specity)","Bankruptcy or Sudden change in Economic Status","Not having Children (Barrenness/Impotency","Not having Children (Barrenness/Impotency)","Other Causes (Please Specify)"];
 var statesArray = {"ANDHRA PRADESH" : "AP","ARUNACHAL PRADESH" : "AR","ASSAM" : "AS","BIHAR" : "BR","CHHATTISGARH" : "CT","GOA" : "GA","GUJARAT" : "GJ","HARYANA" : "HR","HIMACHAL PRADESH" : "HP","JAMMU & KASHMIR" : "JK","JHARKHAND" : "JH","KARNATAKA" : "KA","KERALA" : "KL","MADHYA PRADESH" : "MP","MAHARASHTRA" : "MH","MANIPUR" : "MN","MEGHALAYA" : "ML","MIZORAM" : "MZ","NAGALAND" : "NL","ODISHA" : "OR","PUNJAB" : "PB","RAJASTHAN" : "RJ","SIKKIM" : "SK","TAMIL NADU" : "TN","TRIPURA" : "TR","UTTAR PRADESH" : "UP","UTTARAKHAND" : "UT","WEST BENGAL" : "WB","A & N ISLANDS" : "AN","CHANDIGARH" : "CH","D & N HAVELI" : "DN","DAMAN & DIU" : "DD","DELHI (UT)" : "DL","LAKSHADWEEP" : "LD","PUDUCHERRY" : "PY"};
-var statsTotal = {"ANDHRA PRADESH" : {"2012" : ""},"ARUNACHAL PRADESH" : {"2012" : ""},"ASSAM" : {"2012" : ""},"BIHAR" : {"2012" : ""},"CHHATTISGARH" : {"2012" : ""},"GOA" : {"2012" : ""},"GUJARAT" : {"2012" : ""},"HARYANA" : {"2012" : ""},"HIMACHAL PRADESH" : {"2012" : ""},"JAMMU & KASHMIR" : {"2012" : ""},"JHARKHAND" : {"2012" : ""},"KARNATAKA" : {"2012" : ""},"KERALA" : {"2012" : ""},"MADHYA PRADESH" : {"2012" : ""},"MAHARASHTRA" : {"2012" : ""},"MANIPUR" : {"2012" : ""},"MEGHALAYA" : {"2012" : ""},"MIZORAM" : {"2012" : ""},"NAGALAND" : {"2012" : ""},"ODISHA" : {"2012" : ""},"PUNJAB" : {"2012" : ""},"RAJASTHAN" : {"2012" : ""},"SIKKIM" : {"2012" : ""},"TAMIL NADU" : {"2012" : ""},"TRIPURA" : {"2012" : ""},"UTTAR PRADESH" : {"2012" : ""},"UTTARAKHAND" : {"2012" : ""},"WEST BENGAL" : {"2012" : ""},"A & N ISLANDS" : {"2012" : ""},"CHANDIGARH" : {"2012" : ""},"D & N HAVELI" : {"2012" : ""},"DAMAN & DIU" : {"2012" : ""},"DELHI (UT)" : {"2012" : ""},"LAKSHADWEEP" : {"2012" : ""},"PUDUCHERRY" : {"2012" : ""}};
+var statesAbbrArray =  {"AP" : "ANDHRA PRADESH" , "AR" : "ARUNACHAL PRADESH" , "AS" : "ASSAM" , "BR" : "BIHAR" , "CT" : "CHHATTISGARH" , "GA" : "GOA" , "GJ" : "GUJARAT" , "HR" : "HARYANA" , "HP" : "HIMACHAL PRADESH" , "JK" : "JAMMU & KASHMIR" , "JH" : "JHARKHAND" , "KA" : "KARNATAKA" , "KL" : "KERALA" , "MP" : "MADHYA PRADESH" , "MH" : "MAHARASHTRA" , "MN" : "MANIPUR" , "ML" : "MEGHALAYA" , "MZ" : "MIZORAM" , "NL" : "NAGALAND" , "OR" : "ODISHA" , "PB" : "PUNJAB" , "RJ" : "RAJASTHAN" , "SK" : "SIKKIM" , "TN" : "TAMIL NADU" , "TR" : "TRIPURA" , "UP" : "UTTAR PRADESH" , "UT" : "UTTARAKHAND" , "WB" : "WEST BENGAL" , "AN" : "A & N ISLANDS" , "CH" : "CHANDIGARH" , "DN" : "D & N HAVELI" , "DD" : "DAMAN & DIU" , "DL" : "DELHI (UT)" , "LD" : "LAKSHADWEEP" , "PY" : "PUDUCHERRY"};
+//var statsTotal = {"ANDHRA PRADESH" : {"2012" : ""},"ARUNACHAL PRADESH" : {"2012" : ""},"ASSAM" : {"2012" : ""},"BIHAR" : {"2012" : ""},"CHHATTISGARH" : {"2012" : ""},"GOA" : {"2012" : ""},"GUJARAT" : {"2012" : ""},"HARYANA" : {"2012" : ""},"HIMACHAL PRADESH" : {"2012" : ""},"JAMMU & KASHMIR" : {"2012" : ""},"JHARKHAND" : {"2012" : ""},"KARNATAKA" : {"2012" : ""},"KERALA" : {"2012" : ""},"MADHYA PRADESH" : {"2012" : ""},"MAHARASHTRA" : {"2012" : ""},"MANIPUR" : {"2012" : ""},"MEGHALAYA" : {"2012" : ""},"MIZORAM" : {"2012" : ""},"NAGALAND" : {"2012" : ""},"ODISHA" : {"2012" : ""},"PUNJAB" : {"2012" : ""},"RAJASTHAN" : {"2012" : ""},"SIKKIM" : {"2012" : ""},"TAMIL NADU" : {"2012" : ""},"TRIPURA" : {"2012" : ""},"UTTAR PRADESH" : {"2012" : ""},"UTTARAKHAND" : {"2012" : ""},"WEST BENGAL" : {"2012" : ""},"A & N ISLANDS" : {"2012" : ""},"CHANDIGARH" : {"2012" : ""},"D & N HAVELI" : {"2012" : ""},"DAMAN & DIU" : {"2012" : ""},"DELHI (UT)" : {"2012" : ""},"LAKSHADWEEP" : {"2012" : ""},"PUDUCHERRY" : {"2012" : ""}};
 var pivotData = new Array();
 var tmpData = [];
 var prev = "ANDHRA PRADESH";
@@ -30,7 +31,7 @@ d3.csv("data/indian-suicide.csv", function(deaths) {
 deaths.forEach(function(death){
   
     
-   if(death.cause == "Total" && statsTotal[death.state]) statsTotal[death.state][death.year] = death.G_T;
+   //if(death.cause == "Total" && statsTotal[death.state]) statsTotal[death.state][death.year] = death.G_T;
    
    if(!prev.match("TOTAL"))
     if (prev == death.state){ 
@@ -63,13 +64,11 @@ drawLegend();
 
 
 function updateStackedBarChart(){
-// arg1 = M/F/ALL arg2=year
+// arg1 = M/F/ALL arg2=year arg3 = Cause
 var args = getArguments();
 arg1 = args.gender;
 arg2 = args.year;
 arg3 = args.cause;
-
-console.log(arg1 + ","+arg2+","+arg3);
 
  if(!arg3) {
   causes = d3.layout.stack()(causesArray.map(function(cause) {
@@ -171,6 +170,23 @@ svg.append("g")
     .attr("class", "y axis")
     .attr("transform","translate("+eval(w - p[1] - p[3])+",0)")
     .call(yAxis);      
+
+d3.selectAll(".x.axis text")
+        .on("mouseover",function(){
+          d3.selectAll(".x.axis text").style("opacity",0);
+          var high = d3.select(this).style("opacity",1);
+          d3.select(this).text(statesAbbrArray[high.text()]);
+          high.classed({'active' : true});
+          high.style("border","solid thin #ccc");
+        })
+        .on("mouseout",function(){
+          d3.selectAll(".x.axis text").style("opacity",1);
+          var high = d3.select(".x.axis text.active");
+          high.attr("transform","scale(1)");
+          high.text(statesArray[high.text()]);
+          high.classed({'active' : false});
+          
+        });
 }
 
 function drawLegend(){
@@ -203,20 +219,21 @@ function drawLegend(){
         
       })
       .on("click", function(d,i){
-        // Reduce opacity of all others
-        d3.selectAll("#tblLegend tr td").style("opacity",0.2);
-        d3.select(this).style("opacity",1);
+        // If clicked on an active link, remove the filter
+        if($(this).hasClass("active")) $(this).removeClass("active");
+        else{
+            // Reduce opacity of all others
+          d3.selectAll("#tblLegend tr td").style("opacity",0.2);
+          d3.select(this).style("opacity",1);
 
-        if($("#tblLegend tr td.active").length == 0 )
-        {
-          $(this).addClass("active");
-          updateStackedBarChart();
+          if($("#tblLegend tr td.active").length == 0 ) $(this).addClass("active");
+          else {
+            $("#tblLegend tr td.active").each(function(){ $(this).removeClass("active")});
+            $(this).addClass("active");
+            }
         }
-        else {
-          $("#tblLegend tr td.active").each(function(){ $(this).removeClass("active")});
-          $(this).addClass("active");
-          updateStackedBarChart();
-          }
+        
+        updateStackedBarChart();
 
       })
       ;

@@ -23,10 +23,10 @@ function getArguments(){
 	data["cause"] = $("#tblLegend tr td.active").html() || null;
 
 	var filterInfo = { "G_T" : "Male and Female", "M_T" : "Only Males" , "F_T":"Only Females"};
-	var innerText = '<span class="label label-info">' + "Population :" + filterInfo[data["gender"]] + '</span>';
-	innerText = innerText +'<span class="label label-info">' + " Year : " + data["year"] + '</span>';
+	var innerText = '<span class="label label-info"><i class="fa fa-filter fa-lg"></i>' + "Population :" + filterInfo[data["gender"]] + '</span>';
+	innerText = innerText +'<span class="label label-info"><i class="fa fa-filter fa-lg"></i>' + " Year : " + data["year"] + '</span>';
 	if(data["cause"])
-		innerText = innerText +'<span class="label label-info">' + " Cause : " + data["cause"] + '</span>';
+		innerText = innerText +'<span class="label label-info"><i class="fa fa-filter fa-lg"></i>' + " Cause : " + data["cause"] + '</span>';
 	$("#spnInfo").html(innerText);
 
 	return data;
