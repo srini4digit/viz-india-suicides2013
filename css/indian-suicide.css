@@ -10,7 +10,7 @@
 }
 
 #divSvg {
-	border : solid thin grey;
+/*	border : solid thin grey; */
 	height: 800px;
 	padding: 10px;
 }
@@ -24,19 +24,12 @@
 }
 
 #divSvgControl {
-	border : solid thin green;
+/*	border : solid thin green; */
 	height: 800px;
 	padding: 10px;
 	text-align: left;
 }
 
-.jumbotron {
-	height: 200px;
-}
-
-.jumbotron h1 {
-	font-family: sertiregular;
-}
 .svgHolder {
 	width: 1030px;
 	height: 750px;
@@ -58,12 +51,22 @@ svg {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #fff;
+  stroke-width : 1.5px;
+  stroke: lightgrey;
+  shape-rendering: crispEdges;
+}
+
+.x.axis line,.y.axis line {
+			  stroke: lightgrey;
+			}
+.x.axis text {
+	cursor: pointer;
 }
 
 #spnInfo span {
 	margin: 5px;
 	padding: 5px;
+	font-size: 12px;
 }
 
 #tblLegend tr td:hover{
@@ -93,4 +96,9 @@ a.controls {
 a.controls:hover, a.controls.active {
 	color: white;
 	background-color : teal; 
+	opacity: 0.75;
+}
+
+.fa {
+	margin: 2px;
 }
