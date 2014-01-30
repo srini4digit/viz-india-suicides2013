@@ -69,6 +69,10 @@ svg {
 	font-size: 12px;
 }
 
+#divYearSelection {
+	margin-top: 50px;
+}
+
 #tblLegend tr td:hover{
 	cursor: pointer;
 }
@@ -98,6 +102,13 @@ a.controls:hover, a.controls.active {
 	background-color : teal; 
 	opacity: 0.75;
 }
+
+a.yearSelection.controls {
+	float: left;
+	margin-top: 5px;
+	margin-left: 30px;
+}
+
 
 .fa {
 	margin: 2px;
