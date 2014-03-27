@@ -1,7 +1,6 @@
 var causesArray = ["Bankruptcy or Sudden change in Economic","Suspected/Illicit Relation","Cancellation/Non-Settlement of Marriage","Not having Children(Barrenness/Impotency","Illness (Aids/STD)","Cancer","Paralysis","Insanity/Mental Illness","Other Prolonged Illness","Death of Dear Person","Dowry Dispute","Divorce","Drug Abuse/Addiction","Failure in Examination","Fall in Social Reputation","Family Problems","Ideological Causes/Hero Worshipping","Illegitimate Pregnancy","Love Affairs","Physical Abuse (Rape/Incest Etc.)","Poverty","Professional/Career Problem","Property Dispute","Unemployment","Causes Not known","Other Causes (Please Specity)","Bankruptcy or Sudden change in Economic Status","Not having Children (Barrenness/Impotency","Not having Children (Barrenness/Impotency)","Other Causes (Please Specify)"];
 var statesArray = {"ANDHRA PRADESH" : "AP","ARUNACHAL PRADESH" : "AR","ASSAM" : "AS","BIHAR" : "BR","CHHATTISGARH" : "CT","GOA" : "GA","GUJARAT" : "GJ","HARYANA" : "HR","HIMACHAL PRADESH" : "HP","JAMMU & KASHMIR" : "JK","JHARKHAND" : "JH","KARNATAKA" : "KA","KERALA" : "KL","MADHYA PRADESH" : "MP","MAHARASHTRA" : "MH","MANIPUR" : "MN","MEGHALAYA" : "ML","MIZORAM" : "MZ","NAGALAND" : "NL","ODISHA" : "OR","PUNJAB" : "PB","RAJASTHAN" : "RJ","SIKKIM" : "SK","TAMIL NADU" : "TN","TRIPURA" : "TR","UTTAR PRADESH" : "UP","UTTARAKHAND" : "UT","WEST BENGAL" : "WB","A & N ISLANDS" : "AN","CHANDIGARH" : "CH","D & N HAVELI" : "DN","DAMAN & DIU" : "DD","DELHI (UT)" : "DL","LAKSHADWEEP" : "LD","PUDUCHERRY" : "PY"};
 var statesAbbrArray =  {"AP" : "ANDHRA PRADESH" , "AR" : "ARUNACHAL PRADESH" , "AS" : "ASSAM" , "BR" : "BIHAR" , "CT" : "CHHATTISGARH" , "GA" : "GOA" , "GJ" : "GUJARAT" , "HR" : "HARYANA" , "HP" : "HIMACHAL PRADESH" , "JK" : "JAMMU & KASHMIR" , "JH" : "JHARKHAND" , "KA" : "KARNATAKA" , "KL" : "KERALA" , "MP" : "MADHYA PRADESH" , "MH" : "MAHARASHTRA" , "MN" : "MANIPUR" , "ML" : "MEGHALAYA" , "MZ" : "MIZORAM" , "NL" : "NAGALAND" , "OR" : "ODISHA" , "PB" : "PUNJAB" , "RJ" : "RAJASTHAN" , "SK" : "SIKKIM" , "TN" : "TAMIL NADU" , "TR" : "TRIPURA" , "UP" : "UTTAR PRADESH" , "UT" : "UTTARAKHAND" , "WB" : "WEST BENGAL" , "AN" : "A & N ISLANDS" , "CH" : "CHANDIGARH" , "DN" : "D & N HAVELI" , "DD" : "DAMAN & DIU" , "DL" : "DELHI (UT)" , "LD" : "LAKSHADWEEP" , "PY" : "PUDUCHERRY"};
-//var statsTotal = {"ANDHRA PRADESH" : {"2012" : ""},"ARUNACHAL PRADESH" : {"2012" : ""},"ASSAM" : {"2012" : ""},"BIHAR" : {"2012" : ""},"CHHATTISGARH" : {"2012" : ""},"GOA" : {"2012" : ""},"GUJARAT" : {"2012" : ""},"HARYANA" : {"2012" : ""},"HIMACHAL PRADESH" : {"2012" : ""},"JAMMU & KASHMIR" : {"2012" : ""},"JHARKHAND" : {"2012" : ""},"KARNATAKA" : {"2012" : ""},"KERALA" : {"2012" : ""},"MADHYA PRADESH" : {"2012" : ""},"MAHARASHTRA" : {"2012" : ""},"MANIPUR" : {"2012" : ""},"MEGHALAYA" : {"2012" : ""},"MIZORAM" : {"2012" : ""},"NAGALAND" : {"2012" : ""},"ODISHA" : {"2012" : ""},"PUNJAB" : {"2012" : ""},"RAJASTHAN" : {"2012" : ""},"SIKKIM" : {"2012" : ""},"TAMIL NADU" : {"2012" : ""},"TRIPURA" : {"2012" : ""},"UTTAR PRADESH" : {"2012" : ""},"UTTARAKHAND" : {"2012" : ""},"WEST BENGAL" : {"2012" : ""},"A & N ISLANDS" : {"2012" : ""},"CHANDIGARH" : {"2012" : ""},"D & N HAVELI" : {"2012" : ""},"DAMAN & DIU" : {"2012" : ""},"DELHI (UT)" : {"2012" : ""},"LAKSHADWEEP" : {"2012" : ""},"PUDUCHERRY" : {"2012" : ""}};
 var pivotData = new Array();
 var tmpData = [];
 var prev = "ANDHRA PRADESH";
@@ -29,10 +28,7 @@ var svg = d3.select("div.svgHolder").append("svg:svg")
 d3.csv("data/indian-suicide.csv", function(deaths) {
 
 deaths.forEach(function(death){
-  
-    
-   //if(death.cause == "Total" && statsTotal[death.state]) statsTotal[death.state][death.year] = death.G_T;
-   
+
    if(!prev.match("TOTAL"))
     if (prev == death.state){ 
       
